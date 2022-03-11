@@ -4,27 +4,32 @@
     <canvas id="myCanvas" width="1350" height="660" style="border:1px solid #d3d3d3;"></canvas>
     <img id="rocket" src="rocket2.png" style="display: none" alt="rocket"/>
     <img id="robot" src="robot.png" style="display: none" alt="robot"/>
-<script>
-    
-    var asteroid1 = new Image();
-    var asteroid2 = new Image();
-    var asteroid3= new Image();
-    var asteroid4= new Image();
-    var bottles= new Image();
-    var earth = new Image();
-    var background = new Image();
 
-    var speedX = 1050;
-    var speedY = 210;   
-    
-    function init(){
-        earth.src = 'earth.png';
-        asteroid1.src = 'asteroid1.png';
-        asteroid2.src = 'asteroid2.png';
-        asteroid3.src = 'asteroid3.png';
-        asteroid4.src = 'asteroid4.png';
-        bottles.src = 'bottles.png';
-        background.src = 'background.jpg';
+<script>
+
+var asteroid1 = new Image();
+var asteroid2 = new Image();
+var asteroid3= new Image();
+var asteroid4= new Image();
+var bottles= new Image();
+var earth = new Image();
+var background = new Image();
+
+var robotX = 1050;
+var robotY = 210;   
+
+let i = 0;
+
+const result = document.getElementById('result');
+
+function init(){
+    earth.src = 'earth.png';
+    asteroid1.src = 'asteroid1.png';
+    asteroid2.src = 'asteroid2.png';
+    asteroid3.src = 'asteroid3.png';
+    asteroid4.src = 'asteroid4.png';
+    bottles.src = 'bottles.png';
+    background.src = 'background.jpg';
     window.requestAnimationFrame(draw);
 
     window.addEventListener(
@@ -32,16 +37,16 @@
         function (e) {
             switch (e.keyCode) {
                 case 37:
-                    speedX -= 2; 
+                    robotX -= 2; 
                     break;
                 case 39:
-                    speedX += 2; 
+                    robotX += 2; 
                     break;
                 case 38:
-                    speedY -= 2; 
+                    robotY -= 2; 
                     break;
                 case 40:
-                    speedY += 2; 
+                    robotY += 2; 
                     break;
                 case 40:
 
@@ -49,8 +54,11 @@
 
             }
         }
-    );  
+    );   
+
 }
+
+
 
 function draw(){
 
@@ -67,66 +75,159 @@ function draw(){
     var time = new Date();
     ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) /60000) * time.getMilliseconds());
 
+    let isCollision = false;
+    let isTouched = false;
+
     ctx.translate(210, 0);
+    ctx.beginPath();
+    ctx.arc(30, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid1, 15, 10.5);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(-200, 220);
+    ctx.beginPath();
+    ctx.arc(20, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid2, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(-255, -150);
+    ctx.beginPath();
+    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid3, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(130, -315);
+    ctx.beginPath();
+    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid4, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(250, 45);
+    ctx.beginPath();
+    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid2, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(-385, 100);
+    ctx.beginPath();
+    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid1, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(110, 220);
+    ctx.beginPath();
+    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(bottles, 11.5, 10);
+    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(150, 40);
+    ctx.beginPath();
+    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(bottles, 11.5, 10);
+    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(150, -140);
+    ctx.beginPath();
+    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(bottles, 11.5, 10);
+    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(-320, 150);
+    ctx.beginPath();
+    ctx.arc(20, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid1, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(150, -430);
+    ctx.beginPath();
+    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid4, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
     ctx.translate(-205, 100);
+    ctx.beginPath();
+    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(asteroid3, 11.5, 10);
+    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
 
+    
     ctx.translate(-0, 200);
+    ctx.beginPath();
+    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(bottles, 11.5, 10);
-
+    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
+    
     ctx.translate(400, -100);
+    ctx.beginPath();
+    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(bottles, 11.5, 10);
-
+    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
+    
     ctx.translate(-300, -150);
+    ctx.beginPath();
+    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(bottles, 11.5, 10);
-
+    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
+    
     ctx.translate(-100, 150);
+    ctx.beginPath();
+    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
+    ctx.stroke();
     ctx.drawImage(bottles, 11.5, 10);
-
+    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
+    
     ctx.restore();
-
+    
     ctx.beginPath();
     ctx.arc(675, 330, 152.5, 0, Math.PI * 2, false);
     ctx.stroke();
-
+    
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
     var img = document.getElementById("rocket");
     ctx.drawImage(img, 1100, 180, 120, 100);
     var img = document.getElementById("robot");
-    ctx.drawImage(img, speedX, speedY, 30, 40);
+    ctx.drawImage(img, robotX, robotY, 30, 40);
+    if(isCollision)
+    {
+        alert("Game over:");
+        i = 0;
+        alert(i);
+        robotX = 1050;
+        robotY = 210;
+    }
+
+    if(isTouched)
+    {
+        i += 4;
+        alert(i);
+        if(i == 100)
+        {
+            alert("You saved the world!");
+            ctx.clearRect(0, 0, 3000, 3000);
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var img = document.getElementById("rocket");
+            ctx.drawImage(img, 1100, 180, 120, 100);
+            ctx.drawImage(earth, 525, 175, 305, 305);
+            ctx.drawImage(background, 0, 0, 1350, 660);
+        }
+    }
     
     ctx.drawImage(earth, 525, 175, 305, 305);
     ctx.drawImage(background, 0, 0, 1350, 660);
