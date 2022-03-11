@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+
+    img {
+      display: block;
+      margin-left: block;
+      margin-right: auto;
+      border-radius: 8px;
+      margin-top: 200px;
+      margin-bottom: 110px;
+    }
+    
+    </style>
+
+<body>
+    <img id="earth" src="earth.png" style="display: none" alt="earth"/>
+    <img id="asteroid1" src="asteroid1.png" style="display: none" alt="asteroid1"/>
+    <img id="rocket" src="rocket.png" style="display: none" alt="rocket"/>
+    <canvas id="myCanvas" width="1350" height="660" style="border:1px solid #d3d3d3;"></canvas>
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(600, 275 , 150, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(600, 275, 185, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(600, 275, 220, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(600, 275, 240, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(600, 275, 260, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        var radius = 240;
+        var point_size = 4;
+        var center_x = 600;
+        var center_y = 275;
+        var font_size = "20px";
+
+        window.onload = function() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var img = document.getElementById("earth");
+            ctx.drawImage(img, 450, 122, 305, 305);
+
+
+        }
+        
+    </script> 
+
+
+</body>
+</head>
+
+</html>
