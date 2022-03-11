@@ -1,2 +1,2 @@
-# mazna_banichka
+# Maznite
 proekt
