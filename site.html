@@ -1,67 +1,129 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <style>
-
-    img {
-      display: block;
-      margin-left: block;
-      margin-right: auto;
-      border-radius: 8px;
-      margin-top: 200px;
-      margin-bottom: 110px;
-    }
-    
-    </style>
-
 <body>
-    <img id="earth" src="earth.png" style="display: none" alt="earth"/>
-    <img id="asteroid1" src="asteroid1.png" style="display: none" alt="asteroid1"/>
-    <img id="rocket" src="rocket.png" style="display: none" alt="rocket"/>
     <canvas id="myCanvas" width="1350" height="660" style="border:1px solid #d3d3d3;"></canvas>
-    <script>
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.beginPath();
-        ctx.arc(600, 275 , 150, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(600, 275, 185, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(600, 275, 220, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(600, 275, 240, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(600, 275, 260, 0, 2 * Math.PI);
-        ctx.stroke();
+    <img id="rocket" src="rocket2.png" style="display: none" alt="rocket"/>
+    <img id="robot" src="robot.png" style="display: none" alt="robot"/>
+<script>
 
-        var radius = 240;
-        var point_size = 4;
-        var center_x = 600;
-        var center_y = 275;
-        var font_size = "20px";
+var asteroid1 = new Image();
+var asteroid2 = new Image();
+var asteroid3= new Image();
+var asteroid4= new Image();
+var bottles= new Image();
+var earth = new Image();
 
-        window.onload = function() {
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-            var img = document.getElementById("earth");
-            ctx.drawImage(img, 450, 122, 305, 305);
+function init(){
+    earth.src = 'earth.png';
+    asteroid1.src = 'asteroid1.png';
+    asteroid2.src = 'asteroid2.png';
+    asteroid3.src = 'asteroid3.png';
+    asteroid4.src = 'asteroid4.png';
+    bottles.src = 'bottles.png';
+    window.requestAnimationFrame(draw);
+}
 
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-            var img = document.getElementById("rocket");
-            ctx.drawImage(img, 1000, 122, 150, 200);
+function draw(){
 
-        }
-        
-    </script> 
+    var ctx = document.getElementById('myCanvas').getContext('2d');
 
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.clearRect(0, 0, 3000, 3000);
 
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+    ctx.strokeStyle = 'rgba(0, 153, 255, 0.4)';
+    ctx.save();
+    ctx.translate(675, 330);
+
+    var time = new Date();
+    ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) /60000) * time.getMilliseconds());
+
+    ctx.translate(210, 0);
+    ctx.drawImage(asteroid1, 15, 10.5);
+
+    ctx.translate(-200, 220);
+    ctx.drawImage(asteroid2, 11.5, 10);
+
+    ctx.translate(-255, -150);
+    ctx.drawImage(asteroid3, 11.5, 10);
+
+    ctx.translate(130, -315);
+    ctx.drawImage(asteroid4, 11.5, 10);
+
+    ctx.translate(250, 45);
+    ctx.drawImage(asteroid2, 11.5, 10);
+
+    ctx.translate(-385, 100);
+    ctx.drawImage(asteroid1, 11.5, 10);
+
+    ctx.translate(110, 220);
+    ctx.drawImage(bottles, 11.5, 10);
+
+    ctx.translate(150, 40);
+    ctx.drawImage(bottles, 11.5, 10);
+
+    ctx.translate(150, -140);
+    ctx.drawImage(bottles, 11.5, 10);
+
+    ctx.translate(-320, 150);
+    ctx.drawImage(asteroid1, 11.5, 10);
+
+    ctx.translate(150, -430);
+    ctx.drawImage(asteroid4, 11.5, 10);
+
+    ctx.translate(-205, 100);
+    ctx.drawImage(asteroid3, 11.5, 10);
+
+    ctx.translate(-0, 200);
+    ctx.drawImage(bottles, 11.5, 10);
+
+    ctx.translate(400, -100);
+    ctx.drawImage(bottles, 11.5, 10);
+
+    ctx.translate(-300, -150);
+    ctx.drawImage(bottles, 11.5, 10);
+
+    ctx.translate(-100, 150);
+    ctx.drawImage(bottles, 11.5, 10);
+
+    ctx.restore();
+
+    ctx.beginPath();
+    ctx.arc(675, 330, 152.5, 0, Math.PI * 2, false);
+    ctx.stroke();
+    
+    ctx.drawImage(earth, 525, 175, 305, 305);
+
+    window.requestAnimationFrame(draw);
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(675, 330, 152.5, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(675, 330, 185, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(675, 330, 220, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(675, 330, 240, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(675, 330, 260, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    var img = document.getElementById("rocket");
+    ctx.drawImage(img, 1100, 180, 120, 100);
+    var img = document.getElementById("robot");
+    ctx.drawImage(img, 1050, 210, 30, 40);
+}
+
+init();
+
+</script>
 </body>
-</head>
-
 </html>
