@@ -19,7 +19,6 @@ var story2 = new Image();
 var story3 = new Image();
 var story4 = new Image();
 var story5 = new Image();
-var story6 = new Image();
 
 var robotX = 1050;
 var robotY = 210;
@@ -48,6 +47,7 @@ function init() {
     story2.src = 'story2.jpg';
     story3.src = 'story3.jpg';
     story4.src = 'story4.jpg';
+    story5.src = 'story5.jpg';
 
     intro = true;
     
@@ -72,6 +72,7 @@ function init() {
     story.push({image: story2});
     story.push({image: story3});
     story.push({image: story4});
+    story.push({image: story5});
 
    
     setTimeout("window.requestAnimationFrame(draw)", 2000);
@@ -83,7 +84,7 @@ function init() {
                 switch (e.keyCode) {
                 case 39:
                     storyIndex++;
-                    if (storyIndex <= 2) 
+                    if (storyIndex <= 3) 
                     {
                         drawIntro();
                     }
@@ -188,7 +189,7 @@ function drawGame() {
         {
             alert("You saved the world!");
             ctx.clearRect(0, 0, 3000, 3000);
-            ctx.drawImage(story4, 0, 0, 1350, 660);
+            ctx.drawImage(story5, 0, 0, 1350, 660);
             return ;
         }
     }
