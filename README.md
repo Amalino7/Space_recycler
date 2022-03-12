@@ -1,2 +1,2 @@
-# Maznite
+# Space recycler
 proekt
