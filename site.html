@@ -14,15 +14,27 @@ var asteroid4= new Image();
 var bottles= new Image();
 var earth = new Image();
 var background = new Image();
+var story1 = new Image();
+var story2 = new Image();
+var story3 = new Image();
+var story4 = new Image();
+var story5 = new Image();
+var story6 = new Image();
 
 var robotX = 1050;
 var robotY = 210;
+var robotSpeed = 2;
 
 var actors = [];
+var story = [];
 
 let i = 0;
+let storyIndex = 0;
+
+var intro = true;
 
 const result = document.getElementById('result');
+const introResult = document.getElementById('intResult');
 
 function init() {
     earth.src = 'earth.png';
@@ -32,7 +44,12 @@ function init() {
     asteroid4.src = 'asteroid4.png';
     bottles.src = 'bottles.png';
     background.src = 'background.jpg';
+    story1.src = 'story1.png';
+    story2.src = 'story2.jpg';
+    story3.src = 'story3.jpg';
+    story4.src = 'story4.jpg';
 
+    intro = true;
     
     actors.push({target: false, image: asteroid1, x: 210, y: 0});
     actors.push({target: false, image: asteroid2, x: -200, y: 220});
@@ -50,45 +67,76 @@ function init() {
     actors.push({target: true, image: bottles, x: 400, y: -100});
     actors.push({target: true, image: bottles, x: -300, y: -150});
     actors.push({target: true, image: bottles, x: -100, y: 150});
-    
 
-    window.requestAnimationFrame(draw);
+    story.push({image: story1});
+    story.push({image: story2});
+    story.push({image: story3});
+    story.push({image: story4});
+
+   
+    setTimeout("window.requestAnimationFrame(draw)", 2000);
 
     window.addEventListener(
         'keydown', 
         function (e) {
-            switch (e.keyCode) {
-                case 37:
-                    robotX -= 2; 
-                    break;
+            if (intro) {
+                switch (e.keyCode) {
                 case 39:
-                    robotX += 2; 
+                    storyIndex++;
+                    if (storyIndex <= 2) 
+                    {
+                        drawIntro();
+                    }
+                    else {
+                        intro = false;
+                        drawGame();
+                    }
                     break;
-                case 38:
-                    robotY -= 2; 
-                    break;
-                case 40:
-                    robotY += 2; 
-                    break;
-                case 40:
-
-                    break;
-
+                }
+            }
+            else {
+                switch (e.keyCode) {
+                    case 37:
+                        robotX -= robotSpeed; 
+                        break;
+                    case 39:
+                        robotX += robotSpeed; 
+                        break;
+                    case 38:
+                        robotY -= robotSpeed; 
+                        break;
+                    case 40:
+                        robotY += robotSpeed; 
+                        break;
+                }
             }
         }
     );   
 
 }
 
-function draw(){
+function draw() {
+    if (intro) {
+        drawIntro();
+    }
+    else
+    {
+        drawGame();
+    }
+}
 
+function drawIntro() {
+    var ctx = document.getElementById('myCanvas').getContext('2d');
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.clearRect(0, 0, 3000, 3000);
+    ctx.drawImage(story[storyIndex].image, 0, 0, 1350, 660);
+}
+
+function drawGame() {
     var ctx = document.getElementById('myCanvas').getContext('2d');
 
     ctx.globalCompositeOperation = 'destination-over';
     ctx.clearRect(0, 0, 3000, 3000);
-
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
-    ctx.strokeStyle = 'rgba(0, 153, 255, 0.4)';
     ctx.save();
     ctx.translate(675, 330);
 
@@ -119,15 +167,13 @@ function draw(){
     ctx.arc(675, 330, 152.5, 0, Math.PI * 2, false);
     ctx.stroke();
     
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    var img = document.getElementById("rocket");
-    ctx.drawImage(img, 1100, 180, 120, 100);
-    var img = document.getElementById("robot");
-    ctx.drawImage(img, robotX, robotY, 30, 40);
+
+    ctx.drawImage(rocket, 1100, 180, 120, 100);
+    ctx.drawImage(robot, robotX, robotY, 30, 40);
+
     if(isCollision)
     {
-        alert("Game over:");
+        alert("Game over!");
         i = 0;
         alert(i);
         robotX = 1050;
@@ -142,12 +188,8 @@ function draw(){
         {
             alert("You saved the world!");
             ctx.clearRect(0, 0, 3000, 3000);
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-            var img = document.getElementById("rocket");
-            ctx.drawImage(img, 1100, 180, 120, 100);
-            ctx.drawImage(earth, 525, 175, 305, 305);
-            ctx.drawImage(background, 0, 0, 1350, 660);
+            ctx.drawImage(story4, 0, 0, 1350, 660);
+            return ;
         }
     }
     
@@ -155,9 +197,6 @@ function draw(){
     ctx.drawImage(background, 0, 0, 1350, 660);
 
     window.requestAnimationFrame(draw);
-
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
     ctx.beginPath();
     ctx.arc(675, 330, 152.5, 0, 2 * Math.PI);
     ctx.stroke();
