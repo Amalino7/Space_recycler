@@ -16,13 +16,15 @@ var earth = new Image();
 var background = new Image();
 
 var robotX = 1050;
-var robotY = 210;   
+var robotY = 210;
+
+var actors = [];
 
 let i = 0;
 
 const result = document.getElementById('result');
 
-function init(){
+function init() {
     earth.src = 'earth.png';
     asteroid1.src = 'asteroid1.png';
     asteroid2.src = 'asteroid2.png';
@@ -30,6 +32,26 @@ function init(){
     asteroid4.src = 'asteroid4.png';
     bottles.src = 'bottles.png';
     background.src = 'background.jpg';
+
+    
+    actors.push({target: false, image: asteroid1, x: 210, y: 0});
+    actors.push({target: false, image: asteroid2, x: -200, y: 220});
+    actors.push({target: false, image: asteroid3, x: -255, y: -150});
+    actors.push({target: false, image: asteroid4, x: 130, y: -315});
+    actors.push({target: false, image: asteroid2, x: 250, y: 45});
+    actors.push({target: false, image: asteroid1, x: -385, y: 100});
+    actors.push({target: true, image: bottles, x: 110, y: 220});
+    actors.push({target: true, image: bottles, x: 150, y: 40});
+    actors.push({target: true, image: bottles, x: 150, y: -140});
+    actors.push({target: false, image: asteroid1, x: -320, y: 150});
+    actors.push({target: false, image: asteroid4, x: 150, y: -430});
+    actors.push({target: false, image: asteroid3, x: -205, y: 100});
+    actors.push({target: true, image: bottles, x: 0, y: 200});
+    actors.push({target: true, image: bottles, x: 400, y: -100});
+    actors.push({target: true, image: bottles, x: -300, y: -150});
+    actors.push({target: true, image: bottles, x: -100, y: 150});
+    
+
     window.requestAnimationFrame(draw);
 
     window.addEventListener(
@@ -58,8 +80,6 @@ function init(){
 
 }
 
-
-
 function draw(){
 
     var ctx = document.getElementById('myCanvas').getContext('2d');
@@ -78,118 +98,20 @@ function draw(){
     let isCollision = false;
     let isTouched = false;
 
-    ctx.translate(210, 0);
-    ctx.beginPath();
-    ctx.arc(30, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid1, 15, 10.5);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
+    for (let actor of actors) {
+        ctx.translate(actor.x, actor.y);
+        ctx.beginPath();
+        ctx.arc(30, 20, 20, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.drawImage(actor.image, 15, 10.5);
 
-    ctx.translate(-200, 220);
-    ctx.beginPath();
-    ctx.arc(20, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid2, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(-255, -150);
-    ctx.beginPath();
-    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid3, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(130, -315);
-    ctx.beginPath();
-    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid4, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(250, 45);
-    ctx.beginPath();
-    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid2, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(-385, 100);
-    ctx.beginPath();
-    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid1, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(110, 220);
-    ctx.beginPath();
-    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(bottles, 11.5, 10);
-    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(150, 40);
-    ctx.beginPath();
-    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(bottles, 11.5, 10);
-    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(150, -140);
-    ctx.beginPath();
-    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(bottles, 11.5, 10);
-    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(-320, 150);
-    ctx.beginPath();
-    ctx.arc(20, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid1, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(150, -430);
-    ctx.beginPath();
-    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid4, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    ctx.translate(-205, 100);
-    ctx.beginPath();
-    ctx.arc(25, 20, 20, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(asteroid3, 11.5, 10);
-    isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
-
-    
-    ctx.translate(-0, 200);
-    ctx.beginPath();
-    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(bottles, 11.5, 10);
-    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
-    
-    ctx.translate(400, -100);
-    ctx.beginPath();
-    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(bottles, 11.5, 10);
-    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
-    
-    ctx.translate(-300, -150);
-    ctx.beginPath();
-    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(bottles, 11.5, 10);
-    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
-    
-    ctx.translate(-100, 150);
-    ctx.beginPath();
-    ctx.arc(35, 20, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.drawImage(bottles, 11.5, 10);
-    isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
+        if (actor.target) {
+            isTouched = isTouched || ctx.isPointInStroke(robotX, robotY);
+        }
+        else {
+            isCollision = isCollision || ctx.isPointInStroke(robotX, robotY);
+        }
+    }
     
     ctx.restore();
     
